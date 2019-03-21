@@ -1,0 +1,79 @@
+#!/usr/bin/expect
+
+set timeout 3
+
+# Define some variables
+
+set user_prefix "user"
+set server "echosec.com"
+
+# Get arguments
+
+set user [ lindex $argv 0 ]
+set password [ lindex $argv 1 ]
+set user_suffix [ lindex $argv 2 ]
+
+# SSH into server
+
+spawn ssh "$user\@$server"
+
+# Expecting password or key prompt(s)
+expect {
+    "assword" {
+        send "$password\r"
+    }
+    "yes/no" {
+        send "yes\r"
+    }
+}
+
+# Expect prompt
+expect "$"
+
+# Create user account with "create home" flag
+set newuser $user_prefix$user_suffix
+send "useradd -m $newuser\r"
+
+# Expect prompt
+expect "$"
+
+# Set password
+send "passwd $newuser\r"
+
+# Expect password prompt and send pass
+expect "ass"
+send "$password\r"
+
+# Expect confirm
+expect "ass"
+send "$password\r"
+
+# Expect prompt
+expect "$"
+
+# Change user
+send "su $newuser\r"
+
+# Expect prompt
+expect "$"
+
+# Change to home
+send "cd ~\r"
+
+# Expect prompt
+expect "$"
+
+# Clone repo into www-data
+set timeout 10
+send "git clone https://github.com/h5bp/html5-boilerplate.git www-data\r"
+
+# Expect prompt
+expect "$"
+
+# Exit newuser
+send "exit\r"
+
+# Exit root/ssh-session
+send "exit\r"
+
+interact
