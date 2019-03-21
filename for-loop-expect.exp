@@ -1,0 +1,8 @@
+#!/usr/bin/expect
+
+set name [list subham ramesh mahesh]
+set password password
+foreach user_name $name {
+spawn sudo useradd $user_name
+expect "$ " { send "exit 0\r" }
+}
