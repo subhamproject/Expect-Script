@@ -1,4 +1,8 @@
-!/usr/bin/expect -f
+
+https://linuxaria.com/howto/2-practical-examples-of-expect-on-the-linux-cli
+
+
+#!/usr/bin/expect -f
 #From Linuxaria.com the script is licensed under GNU GPL version 2.0 or above 
 # Expect script to give username, password and IP/port 
 # to connect to a remote ssh server and execute command.
