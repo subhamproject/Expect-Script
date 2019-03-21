@@ -1,0 +1,46 @@
+#!/usr/bin/expect
+set timeout 5
+set user [lindex $argv 0]
+set host [lindex $argv 1]
+set pass [lindex $argv 2]
+spawn ssh -q ${user}@${host}
+expect "assword"
+send "$passr"
+expect "${user}@"
+send "sudo userdel -r rogerr"
+expect "assword"
+send "$passr"
+expect "${user}@"
+send "exitr"
+interact
+
+
+
+/expect_userdel.exp your_username remote_hostname your_password
+
+#!/bin/bash
+user=$1
+pass=$2
+cat server_list | while read host
+do
+     ./expect_userdel.exp $user $host $pass
+done
+
+./wrapper_expect_userdel.sh your_username your_password
+
+
+#!/bin/bash
+user=$1
+pass=$2
+cat server_list | while read host
+do
+   expect -c "
+   set timeout 5
+   spawn spawn ssh -q ${user}@${host}
+   expect "ssword:" { send "${pass}r" }
+   expect "${user}@"
+   send "sudo userdel -r rogerr"
+   expect "assword"
+   send "${pass}r"
+   expect eof "
+done
