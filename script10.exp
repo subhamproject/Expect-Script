@@ -1,0 +1,13 @@
+#!/bin/bash
+HOSTS="VM2 VM3 VM4 VM1"
+read -p "Password: " PASSWORD
+for HOST in $HOSTS
+do
+expect -c "
+spawn /usr/bin/scp -o StrictHostKeyChecking=no /tmp/ranfull ranhalf midran root@$HOST:/tmp/
+expect {
+"password:" { send $PASSWORD\r;interact }
+}
+exit
+"
+done
