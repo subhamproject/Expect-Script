@@ -1,0 +1,38 @@
+puts "** Creation of $VMNAME on $HOST begins... **"
+spawn ssh -l $USER $HOST
+expect_after eof {exit 0}
+set timeout 10
+
+expect "(yes/no)?" { send "yes\r" }
+expect "password:" { send "$PASSWORD\r" }
+expect "~]#" { send "date\r" }
+set timeout 1200
+
+puts "** Transferring rhelvm img file to the $HOST... **"
+expect "~]#" { send "scp  somelink/rhelvm-0-vol.img /storage/iso/\r" }
+expect "Password:" { send "$TESTEMSPASS\r" }
+
+puts "** Transferring the VM conf from $TESTEMSUSER to $HOST... **"
+expect "~]#" { send "scp somelink/$VMNAME.conf /root\r" }
+expect "Password:" { send "$TESTEMSPASS\r" }
+
+puts "** Removing the $VMNAME... **"
+expect "~]#" { send "/opt/ccm/bin/vmremove -f /root/$VMNAME.conf --force\r" }
+sleep 10
+expect "~]#" { send "rm -rf /storage/vmpool/*.img\r" }
+sleep 10
+
+puts "** Creating the $VMNAME... **"
+expect "~]#" { send "/opt/ccm/bin/vmcreate -f /root/$VMNAME.conf -g  /storage/iso/rhelvm-0-vol.img -e\r" }
+sleep 10
+
+puts "** Starting the $VMNAME ... **"
+expect "~]#" { send "virsh start $VMNAME\r" }
+sleep 10
+
+expect "~]#" { send "virsh list --all\r"}
+
+expect "~]#" { send "date\r" }
+
+puts "** Creation of $VMNAME is completed. **"
+expect "~]#" { send "exit\r" }
