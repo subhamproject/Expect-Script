@@ -1,0 +1,12 @@
+for HOST in $HOSTS; do
+    expect -c <<END_EXPECT
+        spawn /usr/bin/scp /tmp/ranfull ranhalf midran root@$HOST:/tmp/
+        expect {
+            "*password:*" {
+                send $PASSWORD\r
+                interact
+            }
+        }
+        exit
+END_EXPECT
+done
