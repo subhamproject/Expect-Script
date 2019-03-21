@@ -1,0 +1,13 @@
+#!/usr/bin/expect -f
+spawn ssh -q subham@10.10.100.101
+expect "password: " { send "subham\r" }
+expect "$ " { send "ps -ef|grep smb\r" }
+expect "$ " { send "su - rcxdev\r" }
+expect "Password:" { send "rcxdev\r" }
+expect "$ " { send "sudo su -\r" }
+puts "\n## Creating user MAHI... ##\n"
+expect "# " { send "useradd mahi\r" }
+expect "# " { send "passwd mahi\r" }
+expect "password:" { send "mahi\r" }
+expect "password:" { send "mahi\r" }
+expect "# " { send "exit\r" }
