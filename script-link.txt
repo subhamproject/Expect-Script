@@ -1,1 +1,3 @@
 https://gist.github.com/Fluidbyte/6294378
+https://likegeeks.com/expect-command/
+https://www.slashroot.in/expect-command-tutorial-linux-example-usage
