@@ -1,0 +1,9 @@
+#!/usr/bin/expect
+set NUM 1
+if { $NUM > 5 } {
+   puts "Bigger number"
+} elseif { $NUM < 5 } {
+puts "Smaller numner"
+} else {
+puts "\Equals\n"
+}
