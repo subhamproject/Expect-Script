@@ -11,6 +11,7 @@ proc login { server } {
 global user pass
 spawn ssh $user@$server
 expect {
+"timeout" { puts "timeout waiting for response $server"  }
 "(yes/no)?" { send "yes\r" }
 "password:" { send "$pass\r" }
 }
