@@ -1,0 +1,7 @@
+foreach var {a b c} {
+    if {[info exists $var]} {
+        puts "$var does indeed exist"
+    } else {
+        puts "$var sadly does not exist"
+    }
+}
