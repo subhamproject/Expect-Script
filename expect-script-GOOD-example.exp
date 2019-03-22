@@ -1,0 +1,59 @@
+#!/usr/bin/expect 
+# Here, we specify all our commands in a list, that we will issue one
+# by one at a later time.
+set commands {
+"show ip route"
+"show ip int brief"
+"show arp"
+}
+# Set the date.
+set date [timestamp -format %C%y%m%d]
+# This variable is for a file called *.txt that has the IP
+# of all of the routers you are collecting information from.
+set device_list [read [open "routers.txt"]]
+# Specify password, as well as what we expect the routers'
+# prompt to be.
+set pass "*********"
+set prompt "#"
+# This command tells expect not to echo the output to the console.
+exp_log_user 0
+# We loop through each device in our list, one by one...
+foreach device $device_list {
+# Set each device's log file to be the name of the device...
+set file_name "$device.txt"
+
+# we initiate the SSH connection
+spawn ssh $device -l *********
+
+
+#If we see a message asking about the device's host key, accept it.
+expect -re "Password:" {
+exp_send "$pass\r"
+}
+
+#exp_send "terminal length 0\n"
+foreach cmd $commands {
+exp_send "terminal length 0\n"
+expect -re $prompt {
+exp_log_file -a $file_name.$cmd
+exp_send "$cmd\r"
+#exp_sleep 2
+exp_log_file
+}
+
+
+}
+#expect -re $prompt {
+#send "term len 0\r"
+#}
+
+
+expect -re $prompt {
+exp_send "logout\r"
+}
+
+
+# Turn off logging.
+exp_log_file
+}
+close
