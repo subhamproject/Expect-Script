@@ -1,0 +1,25 @@
+#!/usr/bin/expect
+set timeout 5
+set user vagrant
+set pass vagrant
+set servers [read [open "server.txt"]]
+#exp_log_user 0
+
+## Fuction in expect is called as "proc"
+proc login { server } {
+##Calling username and password inside function
+global user pass
+spawn ssh $user@$server
+expect {
+"(yes/no)?" { send "yes\r" }
+"password:" { send "$pass\r" }
+}
+expect "$ " { send "sudo su -\r" }
+expect "# " { send "ls -l\r" }
+expect eof
+}
+
+foreach host $servers {
+## calling function
+login $host
+}
