@@ -1,0 +1,24 @@
+#!/usr/bin/expect
+
+set timeout 20
+set user test
+set password test
+
+proc check_host {hostname} {
+    global user passwordt
+
+    spawn ssh $user@$hostname
+    expect "password"
+    send "$password\r"
+    expect "% "                ;# adjust to suit the prompt accordingly
+    send "some command\r"
+    expect "% "                ;# adjust to suit the prompt accordingly
+    send "exit\r"
+    expect eof
+}
+
+set fp [open commands.txt r]
+while {[gets $fp line] != -1} {
+    check_host $line
+}
+close $fp
