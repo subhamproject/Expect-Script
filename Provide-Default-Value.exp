@@ -1,0 +1,3 @@
+set argv [lassign $argv username password]
+if {$username eq ""} {set username default_user}
+if {$password eq ""} {set password default_password}
