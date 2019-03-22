@@ -1,0 +1,30 @@
+ Set up various other variables here ($user, $password)
+
+# Get the list of hosts, one per line #####
+set f [open "host.txt"]
+set hosts [split [read $f] "\n"]
+close $f
+
+# Get the commands to run, one per line
+set f [open "commands.txt"]
+set commands [split [read $f] "\n"]
+close $f
+
+# Iterate over the hosts
+foreach host $hosts {
+    spawn ssh $user@host
+    expect "password:"
+    send "$password\r"
+
+    # Iterate over the commands
+    foreach cmd $commands {
+        expect "% "
+        send "$cmd\r"
+    }
+
+    # Tidy up
+    expect "% "
+    send "exit\r"
+    expect eof
+    close
+}
