@@ -1,0 +1,7 @@
+https://blog.michaelfmcnamara.com/2014/03/expect-automation-examples/
+
+https://paulgporter.net/2012/12/08/30/
+
+
+
+https://www.security-portal.cz/clanky/expect-script-which-can-execute-commands-multiple-servers-ssh
