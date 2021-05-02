@@ -1,1 +1,7 @@
 https://www.tcl.tk/man/expect5.31/expect.1.html
+
+https://likegeeks.com/expect-command/
+
+https://www.linuxcloudvps.com/blog/how-to-automate-shell-scripts-with-expect-command/
+
+https://www.thegeekstuff.com/2010/10/expect-examples/
