@@ -1,0 +1,21 @@
+#!/bin/bash
+expect <<'EOF'
+spawn ssh dinesh@xxx.xxx.xx.xxx "uname -a"
+set count 0
+expect {
+    timeout {puts "timeout happened"}
+    eof {puts "eof received"}
+    "password:" {send "password\r";exp_continue}
+    "Permission denied" {incr count;exp_continue}
+}
+
+set results $expect_out(buffer)
+
+if {[regexp -nocase "Linux" $results]} {
+        puts "It is a Linux Machine"
+} elseif {[regexp -nocase "Aix" $results]} {
+        puts "It is a AIX machine"
+} else {
+        puts "Unknown machine"
+}
+EOF
