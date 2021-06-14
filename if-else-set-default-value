@@ -1,0 +1,13 @@
+#!/usr/bin/expect -f
+
+set pass [lindex $argv 0];
+set username [lindex $argv 1];
+set argv [lassign $argv pass username]
+if {$username eq ""} {set username subham}
+if {$pass eq ""} {set pass password}
+
+if { $username == "jack" } {
+  puts "you enter manually $username"
+} else {
+  puts "it took default $username"
+}
