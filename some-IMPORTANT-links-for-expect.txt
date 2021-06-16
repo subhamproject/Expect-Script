@@ -1,5 +1,7 @@
 https://blog.michaelfmcnamara.com/2014/03/expect-automation-examples/
 
+https://mysnippets443.wordpress.com/2016/03/20/expect-script-read-write-file/
+
 https://paulgporter.net/2012/12/08/30/
 
 
